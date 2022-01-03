@@ -1,0 +1,12 @@
+@startuml
+
+group ""form.onsubmit""
+	note over Browser
+		add the new note
+		to the view
+	end note
+	Browser -> Server: HTTP POST the new note to https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+	Browser <-- Server: 201 (Created)
+end
+
+@enduml

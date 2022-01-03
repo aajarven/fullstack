@@ -1,0 +1,24 @@
+@startuml
+Browser -> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+Browser <-- Server: 200: HTML content
+Browser -> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+Browser <-- Server: 200 or 304: main.css
+Browser -> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+Browser <-- Server: 200 or 304: spa.js
+
+group Browser runs ""spa.js""
+	Browser -> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+	Browser <-- Server: 200: data.json
+
+	note over Browser
+		""onreadystatechange""
+		event handler renders
+		the updated notes from
+		""data.json""
+	end note
+end
+|||
+Browser -> Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/favicon.ico
+Browser <-- Server: 200: favicon.ico
+
+@enduml
