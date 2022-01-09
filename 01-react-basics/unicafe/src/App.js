@@ -9,6 +9,11 @@ const StatisticField = ({text, value}) => (
 )
 
 const Statistics = ({reviews}) => {
+  if (sum(reviews) === 0) {
+    return <p>No reviews given</p>
+  }
+
+
   function sum(dict) {
     return Object.values(dict).reduce((sum, next) => sum + next, 0)
   }
