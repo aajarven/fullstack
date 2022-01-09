@@ -4,7 +4,7 @@ const Button = ({handleClick, text}) => (
   <button onClick={handleClick}>{text}</button>
 )
 
-const StatisticField = ({text, value}) => (
+const StatisticsLine = ({text, value}) => (
   <p>{text}: {value}</p>
 )
 
@@ -29,12 +29,12 @@ const Statistics = ({reviews}) => {
   return (
     <>
       <h1>Statistics</h1>
-      <StatisticField text="good" value={reviews["good"]} />
-      <StatisticField text="neutral" value={reviews["neutral"]}  />
-      <StatisticField text="bad" value={reviews["bad"]}  />
-      <StatisticField text="total" value={sum(reviews)} />
-      <StatisticField text="average" value={average(reviews)} />
-      <StatisticField text="positive" value={positive_percent(reviews) + " %"} />
+      <StatisticsLine text="good" value={reviews["good"]} />
+      <StatisticsLine text="neutral" value={reviews["neutral"]}  />
+      <StatisticsLine text="bad" value={reviews["bad"]}  />
+      <StatisticsLine text="total" value={sum(reviews)} />
+      <StatisticsLine text="average" value={average(reviews)} />
+      <StatisticsLine text="positive" value={positive_percent(reviews) + " %"} />
     </>
   )
 }
