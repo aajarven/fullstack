@@ -1,14 +1,28 @@
 import React, {useState} from 'react';
 
-function Anecdote({anecdote}) {
-  return <p>{anecdote}</p>
+function Anecdote({anecdote, votes}) {
+  return (
+    <>
+      <p>{anecdote}</p>
+      <p>Has {votes} votes</p>
+    </>
+  )
 }
 
-function Button({anecdotes, setSelected}) {
+function NewAnecdoteButton({anecdotes, setSelected}) {
   function updateAnecdote(anecdotes, setSelected) {
     setSelected(Math.floor(Math.random() * anecdotes.length))
   }
   return <button onClick={() => updateAnecdote(anecdotes, setSelected)}>next anecdote</button>
+}
+
+function VoteButton({votes, setVotes, currentIndex}) {
+  function addVote(votes, setVotes, index) {
+    const newVotes = [...votes]
+    newVotes[index] += 1
+    setVotes(newVotes)
+  }
+  return <button onClick={() => addVote(votes, setVotes, currentIndex)}>vote</button>
 }
 
 function App() {
@@ -23,12 +37,13 @@ function App() {
   ]
    
   const [selected, setSelected] = useState(0)
-
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
   return (
     <div>
-      <Anecdote anecdote={anecdotes[selected]} />
-      <Button anecdotes={anecdotes} setSelected={setSelected} />
+      <Anecdote anecdote={anecdotes[selected]} votes={votes[selected]} />
+      <NewAnecdoteButton anecdotes={anecdotes} setSelected={setSelected} />
+      <VoteButton votes={votes} setVotes={setVotes} currentIndex={selected} />
     </div>
   )
 }
