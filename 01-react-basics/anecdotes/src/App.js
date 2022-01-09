@@ -39,11 +39,19 @@ function App() {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
+  function maxValueIndex(votes) {
+    return votes.indexOf(Math.max(...votes))
+  }
+
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <Anecdote anecdote={anecdotes[selected]} votes={votes[selected]} />
       <NewAnecdoteButton anecdotes={anecdotes} setSelected={setSelected} />
       <VoteButton votes={votes} setVotes={setVotes} currentIndex={selected} />
+
+      <h1>Best anecdote</h1>
+      <Anecdote anecdote={anecdotes[maxValueIndex(votes)]} votes={votes[maxValueIndex(votes)]} />
     </div>
   )
 }
