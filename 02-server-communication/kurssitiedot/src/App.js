@@ -12,11 +12,8 @@ const Content = ({course}) => (
   course.parts.map(part => <Part key={part.id} part={part} />)
 )
 
-const Total = (props) => {
-  let total = 0
-  for (let i=0; i < props.course.parts.length; i++) {
-    total += props.course.parts[i].exercises
-  }
+const Total = ({course}) => {
+  const total = course.parts.map(part => part.exercises).reduce((a, b) => a+b)
 
   return <p><strong>Number of exercises {total}</strong></p>
 }
