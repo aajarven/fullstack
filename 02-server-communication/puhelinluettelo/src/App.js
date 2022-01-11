@@ -2,11 +2,16 @@ import React, {useState} from 'react';
 import Person from './components/person.js';
 
 function App() {
-  const [persons, setPersons] = useState([{name: "Arto Hellas", id: 1}])
+  const [persons, setPersons] = useState([{name: "Arto Hellas", number: "123456789", id: 1}])
   const [newName, setNewName] = useState("")
+  const [newNumber, setNewNumber] = useState("")
 
   function updateName(event) {
     setNewName(event.target.value)
+  }
+
+  function updateNumber(event) {
+    setNewNumber(event.target.value)
   }
 
   function addPerson(event) {
@@ -19,10 +24,12 @@ function App() {
 
     const newPerson = {
       name: newName,
+      number: newNumber,
       id: persons.length + 1
     }
     setPersons(persons.concat(newPerson))
     setNewName("")
+    setNewNumber("")
   }
 
   return (
@@ -31,8 +38,14 @@ function App() {
       <div>
         <form onSubmit={addPerson}>
           <div>
-            <span>name:</span>
-            <input value={newName} onChange={updateName}/>
+            <div>
+              <span>name:</span>
+              <input value={newName} onChange={updateName}/>
+            </div>
+            <div>
+              <span>number:</span>
+              <input value={newNumber} onChange={updateNumber}/>
+            </div>
           </div>
           <div>
           <button type="submit">add</button>
