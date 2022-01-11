@@ -12,6 +12,11 @@ function App() {
   function addPerson(event) {
     event.preventDefault()
 
+    if (persons.some(person => person.name === newName)) {
+      alert(`Person ${newName} already found in phonebook`)
+      return;
+    }
+
     const newPerson = {
       name: newName,
       id: persons.length + 1
