@@ -9,4 +9,10 @@ function Person({person}) {
   )
 }
 
-export default Person;
+const Persons = ({persons}) => (
+  <div>
+    {persons.map(person => <Person person={person} key={person.id}/>)}
+  </div>
+)
+
+export default Persons;

@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
-import Person from './components/person.js';
+import Persons from './components/person.js';
+import PersonForm from './components/personform.js';
+import FilterField from './components/filterfield.js';
 
 function App() {
   const [persons, setPersons] = useState([{name: "Arto Hellas", number: "123456789", id: 1}])
@@ -37,39 +39,24 @@ function App() {
     setNewNumber("")
   }
 
-  const shownPersons = persons.filter(person => person.name.toLowerCase().includes(nameFilter.toLowerCase()))
+  const shownPersons = persons.filter( person =>
+    person.name.toLowerCase().includes(nameFilter.toLowerCase())
+  )
 
   return (
     <div>
       <h1>Phonebook</h1>
-      <div>
-        <form onSubmit={addPerson}>
-          <div>
-            <div>
-              <span>name:</span>
-              <input value={newName} onChange={updateName}/>
-            </div>
-            <div>
-              <span>number:</span>
-              <input value={newNumber} onChange={updateNumber}/>
-            </div>
-          </div>
-          <div>
-          <button type="submit">add</button>
-          </div>
-        </form>
-      </div>
+      <PersonForm
+        addPerson={addPerson}
+        newName={newName}
+        updateName={updateName}
+        newNumber={newNumber}
+        updateNumber={updateNumber}
+      />
 
       <h2>Numbers</h2>
-      <div>
-        <form>
-          <span>search:</span>
-          <input type="" value={nameFilter} onChange={updateNameFilter} />
-        </form>
-      </div>
-      <div>
-        {shownPersons.map(person => <Person person={person} key={person.id}/>)}
-      </div>
+      <FilterField filter={nameFilter} updateFilter={updateNameFilter} />
+      <Persons persons={shownPersons} />
     </div>
   );
 }
