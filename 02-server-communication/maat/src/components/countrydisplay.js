@@ -14,7 +14,7 @@ function CountryDetails({country}) {
       <ul>
         {Object.entries(country.languages).map(lan => <li>{lan[1]}</li>)}
       </ul>
-      <img src={country.flags.png} />
+      <img src={country.flags.png} alt={`Flag of ${country.name.common}`} />
     </>
   )
 }
