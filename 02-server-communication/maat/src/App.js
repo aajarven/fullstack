@@ -38,6 +38,7 @@ function App() {
             country => country.name.common.toLowerCase().includes(searchStr.toLowerCase())
           )
         }
+        setSearchStr={setSearchStr}
       />
     </div>
   );
