@@ -1,14 +1,18 @@
 import React, {useState, useEffect} from 'react';
+import Notification from './components/notification.js';
 import Persons from './components/person.js';
 import PersonForm from './components/personform.js';
 import FilterField from './components/filterfield.js';
 import personService from './services/persons.js';
+import './index.css';
 
 function App() {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState("")
   const [newNumber, setNewNumber] = useState("")
   const [nameFilter, setNameFilter] = useState("")
+  const [errorMsg, setErrorMsg] = useState(null)
+  const [notificationMsg, setNotificationMsg] = useState(null)
 
   useEffect(
     () => {
@@ -40,9 +44,15 @@ function App() {
       .then(
         updatedPerson => {
           setPersons(persons.map(person => person.id === newPerson.id ? updatedPerson : person))
+        })
+      .then(
+        () => {
           setNewName("")
           setNewNumber("")
-        })
+          setNotificationMsg(`Updated ${newPerson.name}`)
+          setTimeout(() => setNotificationMsg(null), 5000)
+        }
+      )
   }
 
   function addPerson(event) {
@@ -71,6 +81,12 @@ function App() {
           setNewNumber("")
         }
       )
+      .then(
+        () => {
+          setNotificationMsg(`Added ${newPerson.name}`)
+          setTimeout(() => setNotificationMsg(null), 5000)
+        }
+      )
   }
 
   function deletePerson(deletedPerson) {
@@ -82,6 +98,12 @@ function App() {
       .then(
         () => {
           setPersons(persons.filter(person => person.id !== deletedPerson.id))
+        }
+      )
+      .then(
+        () => {
+          setNotificationMsg(`Removed ${deletedPerson.name}`)
+          setTimeout(() => setNotificationMsg(null), 5000)
         }
       )
   }
@@ -100,6 +122,8 @@ function App() {
         newNumber={newNumber}
         updateNumber={updateNumber}
       />
+
+      <Notification msg={notificationMsg} />
 
       <h2>Numbers</h2>
       <FilterField filter={nameFilter} updateFilter={updateNameFilter} />
