@@ -14,8 +14,8 @@ function App() {
     () => {
       personService
         .getAll()
-        .then(response => {
-          setPersons(response.data)
+        .then(persons => {
+          setPersons(persons)
         })
     },
     [])
@@ -38,8 +38,8 @@ function App() {
     personService
       .update(oldPerson.id, newPerson)
       .then(
-        response => {
-          setPersons(persons.map(person => person.id === newPerson.id ? response.data : person))
+        updatedPerson => {
+          setPersons(persons.map(person => person.id === newPerson.id ? updatedPerson : person))
           setNewName("")
           setNewNumber("")
         })
@@ -65,8 +65,8 @@ function App() {
     personService
       .create(newPerson)
       .then(
-        response => {
-          setPersons(persons.concat(response.data))
+        newPerson => {
+          setPersons(persons.concat(newPerson))
           setNewName("")
           setNewNumber("")
         }
@@ -80,7 +80,7 @@ function App() {
     personService
       .delete(deletedPerson.id)
       .then(
-        response => {
+        () => {
           setPersons(persons.filter(person => person.id !== deletedPerson.id))
         }
       )
