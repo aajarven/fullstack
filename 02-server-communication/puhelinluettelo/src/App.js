@@ -44,7 +44,6 @@ function App() {
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
     }
 
     personService
@@ -54,6 +53,19 @@ function App() {
           setPersons(persons.concat(response.data))
           setNewName("")
           setNewNumber("")
+        }
+      )
+  }
+
+  function deletePerson(deletedPerson) {
+    if (!window.confirm(`Remove ${deletedPerson.name}?`)) {
+      return
+    }
+    personService
+      .delete(deletedPerson.id)
+      .then(
+        response => {
+          setPersons(persons.filter(person => person.id !== deletedPerson.id))
         }
       )
   }
@@ -75,7 +87,7 @@ function App() {
 
       <h2>Numbers</h2>
       <FilterField filter={nameFilter} updateFilter={updateNameFilter} />
-      <Persons persons={shownPersons} />
+      <Persons persons={shownPersons} deletePerson={deletePerson} />
     </div>
   );
 }
