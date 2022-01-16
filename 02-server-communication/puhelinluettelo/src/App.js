@@ -33,12 +33,29 @@ function App() {
     setNameFilter(event.target.value)
   }
 
+  function updatePerson(event) {
+    const oldPerson = persons.find(person => person.name === newName)
+    const newPerson = {...oldPerson, number: newNumber}
+    personService
+      .update(oldPerson.id, newPerson)
+      .then(
+        response => {
+          setPersons(persons.map(person => person.id === newPerson.id ? response.data : person))
+          setNewName("")
+          setNewNumber("")
+        })
+  }
+
   function addPerson(event) {
     event.preventDefault()
 
     if (persons.some(person => person.name === newName)) {
-      alert(`Person ${newName} already found in phonebook`)
-      return;
+      if (window.confirm(`Person ${newName} already found in phonebook. Update number?`)) {
+        updatePerson(event)
+        return
+      } else {
+        return
+      }
     }
 
     const newPerson = {

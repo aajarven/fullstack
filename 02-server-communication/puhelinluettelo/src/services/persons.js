@@ -10,6 +10,10 @@ function create(newObject) {
   return axios.post(baseUrl, newObject)
 }
 
+function update(id, newObject) {
+  return axios.put(`${baseUrl}/${id}`, newObject)
+}
+
 function deletePerson(id) {
   return axios.delete(`${baseUrl}/${id}`)
 }
@@ -17,6 +21,7 @@ function deletePerson(id) {
 const personService = {
   getAll: getAll,
   create: create,
+  update: update,
   delete: deletePerson,
 }
 
