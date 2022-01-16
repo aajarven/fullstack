@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import Error from './components/error.js';
 import Notification from './components/notification.js';
 import Persons from './components/person.js';
 import PersonForm from './components/personform.js';
@@ -51,6 +52,13 @@ function App() {
           setNewNumber("")
           setNotificationMsg(`Updated ${newPerson.name}`)
           setTimeout(() => setNotificationMsg(null), 5000)
+        }
+      )
+      .catch(
+        error => {
+          setErrorMsg(`${oldPerson.name} no longer found on server`)
+          setTimeout(() => {setErrorMsg(null)}, 5000)
+          setPersons(persons.filter(person => person.id !== oldPerson.id))
         }
       )
   }
@@ -106,6 +114,13 @@ function App() {
           setTimeout(() => setNotificationMsg(null), 5000)
         }
       )
+      .catch(
+        error => {
+          setErrorMsg(`${deletedPerson.name} has already been removed`)
+          setTimeout(() => {setErrorMsg(null)}, 5000)
+          setPersons(persons.filter(person => person.id !== deletedPerson.id))
+        }
+      )
   }
 
   const shownPersons = persons.filter( person =>
@@ -124,6 +139,7 @@ function App() {
       />
 
       <Notification msg={notificationMsg} />
+      <Error msg={errorMsg} />
 
       <h2>Numbers</h2>
       <FilterField filter={nameFilter} updateFilter={updateNameFilter} />
