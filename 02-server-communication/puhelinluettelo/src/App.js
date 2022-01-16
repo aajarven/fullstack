@@ -3,6 +3,7 @@ import axios from 'axios';
 import Persons from './components/person.js';
 import PersonForm from './components/personform.js';
 import FilterField from './components/filterfield.js';
+import personService from './services/persons.js';
 
 function App() {
   const [persons, setPersons] = useState([])
@@ -12,8 +13,8 @@ function App() {
 
   useEffect(
     () => {
-      axios
-        .get('http://localhost:3001/persons')
+      personService
+        .getAll()
         .then(response => {
           setPersons(response.data)
         })
@@ -46,8 +47,8 @@ function App() {
       id: persons.length + 1
     }
 
-    axios
-      .post('http://localhost:3001/persons', newPerson)
+    personService
+      .create(newPerson)
       .then(
         response => {
           setPersons(persons.concat(response.data))
